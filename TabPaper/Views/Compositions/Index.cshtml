@@ -1,10 +1,53 @@
-﻿@{
-    ViewBag.Title = "Welcome Page";
-}
+﻿@model TabPaper.ViewModels.TabViewModel
+@{
+    ViewBag.Title = "Compositions";
 
-<ul>
-    <li>On-Spot Writing</li>
-    <li>On-Spot Recording</li>
-    <li>View Compostitions</li>
-    <li>Settings</li>
-</ul>
+}
+<script src="~/Scripts/DrgnDrp.js"></script>
+
+@*<p><b>@ViewBag.jj</b></p>*@
+<div id="zzzz">
+    <script>
+
+        
+        var cars = ["<button id='a' onclick='cars.splice(event, 1)' type='button'>BMW</button>", "<button id='b' onclick='cars.splice(event, 1)' type='button'>Volvo</button>", "<button onclick='cars.splice(event, 1)' type='button'>Saab</button>", "<button onclick='cars.splice(event, 1)' type='button'>Ford</button>", "<button onclick='cars.splice(event, 1)' type='button'>Fiat</button>", "<button onclick='cars.splice(event, 1)' type='button'>Audi</button>"];
+        var text = [];
+        var i;
+        for (i = 0; i < cars.length; i++) {
+            text += [(cars[i] + "<br>")];
+            
+        }
+        document.getElementById("zzzz").innerHTML = text;
+        function append() {
+
+            cars.push("<button onclick='cars.splice(event, 1)' type='button'>" + localStorage.clickcount + "</button><br>");
+            document.getElementById("zzzz").innerHTML = cars;
+        }
+        function remove() {
+            cars.splice(cars[0], 1);
+            document.getElementById("zzzz").innerHTML = cars;
+        }
+</script>
+</div>
+@if (ViewBag.values != null)
+{
+    <ul>
+        @foreach (string e in ViewBag.values)
+        {
+            <li><b>@e uuuuuuuuuuuuuuuuuuuuuuuuuuu</b></li>
+
+        }
+    </ul>
+}
+    <div id="result">
+        <script>
+            
+retrieve();
+        </script>
+    </div>
+
+    <p><button onclick="append()" type="button">Click me!</button></p>
+    <form>
+        <p><button onclick="remove(event)" type="button">Click me!</button></p>
+    </form>
+<!--<p><button onclick="retrieve()" type="button">Click me!</button></p>-->

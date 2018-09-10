@@ -1,4 +1,6 @@
-﻿<style>
+﻿@model TabPaper.ViewModels.TabViewModel
+@{string tbppr = "";}
+<style>
     #div1 {
         height: 20px;
         width: 20px;
@@ -19,35 +21,31 @@
         border: 3px double #0026ff;
     }
 </style>
+<script src="~/Scripts/DrgnDrp.js">
+
+</script>
+
 <script>
 
-    var ID = "I"
-    function allowDrop(ev) {
-        ev.preventDefault();
-    }
 
-    function drag(ev) {
-
-        ev.dataTransfer.setData("text", ev.target.id);
-
-    }
-
-    function copy(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        var nodeCopy = document.getElementById(data).cloneNode(true);
-        nodeCopy.id = ID;
-        ID += "I";
-        ev.target.appendChild(nodeCopy);
-
+    var cars = [];
+    var text = [];
+    var i;
+    function frlp() {
+    for (i = 0; i < cars.length; i++) {
+        text += [(cars[i] + "<br>")];
 
     }
-    function drop(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
+        document.getElementById("zzzz").innerHTML = text;
+    }
+    function append(a, b, c, img) {
 
-        document.getElementById(data).parentNode.removeChild(document.getElementById(data));
-
+        cars.push(a + b + c + img);
+        frlp();
+    }
+    function remove() {
+        cars.splice(cars[0], 1);
+        document.getElementById("zzzz").innerHTML = cars;
     }
 </script>
 @*change above and below*@
@@ -55,57 +53,49 @@
 <h2>@ViewBag.Title</h2>
 
 @*; border: 1px dotted #333333; height:40px; width:auto*@
+
+
 @for (int s = 0; s < 8; s++)
-{
+{<!--Individual Line-->
     <div id="div2">
         @for (int i = 0; i < 7; i++)
         {
+
             <div style="clear:left; background-image:url('/Content/Images/TbPpr.png')">
-                <p style="float:left"><b>@(s+1) :</b></p><p style="float:left">@ViewBag.range[i]</p><p style="float:left">|</p>
+                <!--Tab strings-->
+                <p style="float:left"><b>@(s + 1) :</b></p><p style="float:left">@ViewBag.range[i]</p><p style="float:left">|</p>
                 @for (int b = 0; b < 23; b++)
                 {
-                    <p style="float:left">&#8213</p> <div style="float:left" id="div1" ondrop="copy(event)" ondragover="allowDrop(event)"></div>
+                    <!--Tab timeline-->
+                    <p style="float:left">&#8213</p>
+
+                    <div style="float:left" id="div1" ondrop="clickCounter(); copy(event, @i)" ondragover="allowDrop(event)">
+                    </div>
+
+
+                    <p style="float:left">|</p>
+
 
                 }
-                <p style="float:left">|</p>
             </div>
+
+
         }
-    </div>
+        <div style="clear:left" ondragover="allowDrop(event)" ondrop="delete (event)">
+            <!--Note Values:-->
+            @for (int t = 0; t < 33; t++)
+            {
 
-    <div style="clear:left" ondragover="allowDrop(event)" ondrop="delete (event)">
-        @*@for (int t = 0; t < 33; t++)
-            {*@
-        <img id="drag0" src="/Content/Images/Int_Square_Blank(0).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="BinDiv"><b style="float:left"> | </b>
-        <img id="drag1" src="/Content/Images/Int_Square_Blank(1).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag2" src="/Content/Images/Int_Square_Blank(2).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag3" src="/Content/Images/Int_Square_Blank(3).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag4" src="/Content/Images/Int_Square_Blank(4).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag5" src="/Content/Images/Int_Square_Blank(5).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag6" src="/Content/Images/Int_Square_Blank(6).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag7" src="/Content/Images/Int_Square_Blank(7).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag8" src="/Content/Images/Int_Square_Blank(8).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag9" src="/Content/Images/Int_Square_Blank(9).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag10" src="/Content/Images/Int_Square_Blank(10).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag11" src="/Content/Images/Int_Square_Blank(11).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag12" src="/Content/Images/Int_Square_Blank(12).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag13" src="/Content/Images/Int_Square_Blank(13).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag14" src="/Content/Images/Int_Square_Blank(14).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag15" src="/Content/Images/Int_Square_Blank(15).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag16" src="/Content/Images/Int_Square_Blank(16).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag17" src="/Content/Images/Int_Square_Blank(17).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag18" src="/Content/Images/Int_Square_Blank(18).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag19" src="/Content/Images/Int_Square_Blank(19).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag20" src="/Content/Images/Int_Square_Blank(20).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag21" src="/Content/Images/Int_Square_Blank(21).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag22" src="/Content/Images/Int_Square_Blank(22).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag23" src="/Content/Images/Int_Square_Blank(23).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag24" src="/Content/Images/Int_Square_Blank(24).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag25" src="/Content/Images/Int_Square_Blank(25).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag26" src="/Content/Images/Int_Square_Blank(26).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag27" src="/Content/Images/Int_Square_Blank(27).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag28" src="/Content/Images/Int_Square_Blank(28).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag29" src="/Content/Images/Int_Square_Blank(29).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
-        <img id="drag30" src="/Content/Images/Int_Square_Blank(30).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="div1"><b style="float:left"> | </b>
+                <img id="@("drag" + t.ToString())" src="/Content/Images/Int_Square_Blank(@t).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="BinDiv"><b style="float:left"> | </b>
+
+            }
+        </div>
+        <div id="BinDiv" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
 
     </div>
-    <div id="BinDiv" ondragover="allowDrop(event)" ondrop="drop(event)"></div>}
+}
+
+@*<p><button onclick="retrieve()" type="button">Click me!</button></p>
+<p><button onclick="addEv()" type="button">Click me!</button></p>
+<p><button onclick="clickCounter()" type="button">Click me!</button></p>*@
+<div id="result"></div>
