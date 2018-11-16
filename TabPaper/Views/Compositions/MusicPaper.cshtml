@@ -21,33 +21,96 @@
         border: 3px double #0026ff;
     }
 </style>
-<script src="~/Scripts/DrgnDrp.js">
-
-</script>
-
 <script>
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
 
+    function drag(ev) {
 
-    var cars = [];
-    var text = [];
-    var i;
-    function frlp() {
-    for (i = 0; i < cars.length; i++) {
-        text += [(cars[i] + "<br>")];
+        ev.dataTransfer.setData("text", ev.target.id);
 
     }
-        document.getElementById("zzzz").innerHTML = text;
-    }
-    function append(a, b, c, img) {
 
-        cars.push(a + b + c + img);
-        frlp();
+    function drop(ev) {
+
+
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        document.getElementById(data).parentNode.removeChild(document.getElementById(data));
+
+
     }
-    function remove() {
-        cars.splice(cars[0], 1);
-        document.getElementById("zzzz").innerHTML = cars;
-    }
+    var IguessUbb = [];
+
+ 
+
+    function copy(ev, num, num2, num3) {
+        var data = ev.dataTransfer.getData("text");
+        var DataVar = [];
+            DataVar += data;
+        var nodeCopy = document.getElementById(data).cloneNode(true);
+
+        
+        if (DataVar[5] == ":") {
+            var ValueCnt;
+            var value = [];
+            for (ValueCnt = 0; ValueCnt < 5; ValueCnt++) {
+                value += DataVar[ValueCnt];
+            }
+
+            nodeCopy.id = value + ":" + num + ":" + num2 + ":" + num3 + ";";
+            ev.target.appendChild(nodeCopy);
+            var splicedData = [];
+
+            var a
+            for (a = 4; a < value.length; a++) {
+                splicedData += value[a];
+            }
+            IguessUbb += [splicedData + ", " + num + ", " + num2 + ", " + num3 + "<br>"];
+
+
+            document.getElementById("result").innerHTML = IguessUbb;
+        }
+        else if (DataVar[6] == ":") {
+            var ValueCnt;
+            var value = [];
+            for (ValueCnt = 0; ValueCnt < 6; ValueCnt++) {
+                value += DataVar[ValueCnt];
+            }
+            nodeCopy.id = value + ":" + num + ":" + num2 + ":" + num3 + ";";
+            ev.target.appendChild(nodeCopy);
+            var splicedData = [];
+            var a
+            for (a = 4; a < value.length; a++) {
+                splicedData += value[a];
+            }
+            IguessUbb += [splicedData + ", " + num + ", " + num2 + ", " + num3 + "<br>"];
+            document.getElementById("result").innerHTML = IguessUbb;
+        }
+        else {
+            nodeCopy.id = data + ":" + num + ":" + num2 + ":" + num3 + ";";
+            ev.target.appendChild(nodeCopy);
+            var splicedData = [];
+
+            var a
+            for (a = 4; a < DataVar.length; a++) {
+                splicedData += DataVar[a];
+            }
+            IguessUbb += [splicedData + ", " + num + ", " + num2 + ", " + num3 + "<br>"];
+
+
+            document.getElementById("result").innerHTML = IguessUbb;
+        }
+
+        }
+        
+        
+        
+    
 </script>
+
+
 @*change above and below*@
 
 <h2>@ViewBag.Title</h2>
@@ -63,17 +126,17 @@
 
             <div style="clear:left; background-image:url('/Content/Images/TbPpr.png')">
                 <!--Tab strings-->
-                <p style="float:left"><b>@(s + 1) :</b></p><p style="float:left">@ViewBag.range[i]</p><p style="float:left">|</p>
+                <p style="float:left"><b>@(i + 1) :</b></p><p style="float:left">@ViewBag.range[i]</p><p style="float:left">|</p>
                 @for (int b = 0; b < 23; b++)
                 {
                     <!--Tab timeline-->
                     <p style="float:left">&#8213</p>
 
-                    <div style="float:left" id="div1" ondrop="clickCounter(); copy(event, @i)" ondragover="allowDrop(event)">
+                    <div style="float:left" id="div1" ondrop="copy(,event, @s, @i, @b)" ondragover="allowDrop(event)">
                     </div>
 
 
-                    <p style="float:left">|</p>
+                   
 
 
                 }
@@ -83,8 +146,9 @@
         }
         <div style="clear:left" ondragover="allowDrop(event)" ondrop="delete (event)">
             <!--Note Values:-->
-            @for (int t = 0; t < 33; t++)
-            {
+    
+    @for (int t = 0; t < 33; t++)
+    {
 
                 <img id="@("drag" + t.ToString())" src="/Content/Images/Int_Square_Blank(@t).png" style="float:left" height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="BinDiv"><b style="float:left"> | </b>
 
