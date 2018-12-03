@@ -10,7 +10,7 @@ namespace TabPaper.Controllers
     {
         public ActionResult Index()
         {
-            return Redirect("/Compositions/MusicPaper");
+            return Redirect("/Compositions");
         }
 
        

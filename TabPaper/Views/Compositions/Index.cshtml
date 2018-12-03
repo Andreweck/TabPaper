@@ -1,53 +1,108 @@
 ﻿@model TabPaper.ViewModels.TabViewModel
 @{
     ViewBag.Title = "Compositions";
-
+    
 }
+<style>
+    #BinDiv {
+        height: 40px;
+        width: 100%;
+        border: 3px double #0026ff;
+    }
+</style>
 <script>
+    function cleared() {
+        localStorage.clear();
+        var listHolder;
+        for (listHolder = 0; listHolder < dragIDList.length; listHolder++) {
+            document.getElementById(dragIDList[listHolder]).parentNode.removeChild(document.getElementById(dragIDList[listHolder]));
+            document.getElementById("items").innerHTML = 'Please create a new composition.<br><a href="Compositions/LoadMusicPaper?id=1&page=1"><button>New Composition</button></a>';
+        }
+        
+        
+        }
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+    function drag(ev) {
+
+        ev.dataTransfer.setData("text", ev.target.id);
+
+    }
+    var NewComp = 0;
+    var item = [];
+    var dragIDList = [];
     function menuStart() {
-       /* document.getElementById("items").innerHTML = localStorage.length;*/
-        var h;
-        var elemnt = "items";
-        var splt;
-        var item = [];
+       
+        var holder;
+        
+        var splitValue;
+
+        
+        
         var lngth = localStorage.length;
-        for (h = 0; h < lngth; h += 1) {
-            if (typeof localStorage[h] !== 'undefined') {
-                splt = localStorage[h].split(',');
-                if (item.includes([(`<a id='` + splt[4] + `' href='LoadMusicPaper?id=` + splt[4] + `&page=1'><img src="/Content/Images/Int_Square_Blank(` + splt[4] + `).png" style="float:left" 
+        for (holder = 0; holder < lngth; holder += 1) {
+            if (typeof localStorage[holder] !== 'undefined') {
+                splitValue = localStorage[holder].split(',');
+                if (item.includes([(`<a id="drag` + splitValue[4] + `" href="Compositions/LoadMusicPaper?id=` + splitValue[4] + `&page=1"><img id="drag` + splitValue[4] + `" src="/Content/Images/Int_Square_Blank(` + splitValue[4] + `).png" style="float:left" 
                 height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="BinDiv"></a><br>`)])) {
 
                     item = item
                 }
                 else {
-                    item += [(`<a id='` + splt[4] + `' href='LoadMusicPaper?id=` + splt[4] + `&page=1'><img src="/Content/Images/Int_Square_Blank(` + splt[4] + `).png" style="float:left" 
+                    item += [(`<a id="drag` + splitValue[4] + `" href="Compositions/LoadMusicPaper?id=` + splitValue[4] + `&page=1"><img id="drag` + splitValue[4] + `" src="/Content/Images/Int_Square_Blank(` + splitValue[4] + `).png" style="float:left" 
                 height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="BinDiv"></a><br>`)];
-
+                    NewComp += 1;
+                    if (NewComp <= Number(splitValue[4])) 
+                    {
+                        NewComp = Number(splitValue[4]) + 1;
+                    }
+                    dragIDList += "drag" + splitValue[4] + ",";
                 }
                         
                    
             }
-            else if (typeof localStorage[h] === 'undefined') { lngth += 1; }
+            else if (typeof localStorage[holder] === 'undefined') { lngth += 1; }
         }
 
-        document.getElementById(elemnt).innerHTML = item;
+        if (item.length === 0) { document.getElementById("items").innerHTML = 'Please create a new composition.<br><a href="Compositions/LoadMusicPaper?id=1&page=1"><button>New Composition</button></a>'; }
+        else { document.getElementById("items").innerHTML = item + ['<br><a href="Compositions/LoadMusicPaper?id=' + NewComp + '&page=1"><button>New Composition</button></a>']; }
+        dragIDList = dragIDList.split(',');
+    }
+    function drop(ev) {
 
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        document.getElementById(data).parentNode.removeChild(document.getElementById(data));
+        var use = data;
+        var VlueCnt;
+        var vlue = [];
+        for (VlueCnt = 4; VlueCnt < use.length - 1; VlueCnt++) {
+            vlue += use[VlueCnt];
+        }
+        var pass = vlue;
+
+        var vble;
+        for (vble = 0; vble < localStorage.length; vble++) {
+            if ((localStorage[vble] == pass) === true) {
+                localStorage.removeItem(vble);
+            }
+        }
     }
-    function clear() {
-        localStorage.clear();
-        menuStart();
-    }
+    
+    
 </script>
 <body onload="menuStart()">
 
-    @*<p><b>@ViewBag.jj</b></p>*@
+    
     <div id="items">
 
     </div>
 
+
+
+    <button onclick="cleared()">Delete All</button>
+    <div id="link"></div>
     
-
-    <p><button onclick="clear()" type="button">Delete All</button></p>
-
-    <!--<p><button onclick="retrieve()" type="button">Click me!</button></p>-->
+    
 </body>

@@ -115,13 +115,9 @@ function copy(ev, num, num2, num3, num4, num5) {
 
 
             i = localStorage.length;
-            @*var hold;document.getElementById("result").innerHTML += localStorage[i];
-            for (hold = 0; hold < localStorage.length;) {
-
-            }
-            *@
+            
         }
-        document.getElementById("result").innerHTML = localStorage.length;
+        
     }
     function start() {
         var h;
@@ -132,13 +128,13 @@ function copy(ev, num, num2, num3, num4, num5) {
         for (h = 0; h < lngth; h += 1) {
             if (typeof localStorage[h] !== 'undefined') {
                 splt = localStorage[h].split(',');
-                if (splt[4] == @ViewBag.idnum) {//, 
+                if (splt[4] == @ViewBag.idnum) { 
                     if (splt[5] == @ViewBag.pg) {
 
-                        elemnt = "div" + splt[1] + ";" + splt[2] + ";" + splt[3];// + splt[1] + ";" + splt[2] + ";" + splt[3];; "div" + localStorage[h][1] + ";" + localStorage[h][2] + ";" + localStorage[h][3];
+                        elemnt = "div" + splt[1] + ";" + splt[2] + ";" + splt[3];
                         ctml = `<img id="drag` + splt[0] + `:` + splt[1] + `:` + splt[2] + `:` + splt[3] + `:` + splt[4] + `:` + splt[5] + `;" src="/Content/Images/Int_Square_Blank(` + splt[0] + `).png" style="float:left" 
                 height="20px" width="20px" draggable="true" ondragstart="drag(event)" dropzone="BinDiv">`;
-                        //` + splt[0] + `:` + splt[1] + `:` + splt[2] + `:` + splt[3] + `:` + splt[4] + `:` + slpt[5] + `
+                        
                         document.getElementById(elemnt).innerHTML = ctml;
                         
                     }
@@ -147,7 +143,7 @@ function copy(ev, num, num2, num3, num4, num5) {
             else if (typeof localStorage[h] === 'undefined') { lngth += 1; }
         }
         
-        document.getElementById("result").innerHTML = localStorage.length;
+        
     }
     function drop(ev) {
        
@@ -168,7 +164,7 @@ function copy(ev, num, num2, num3, num4, num5) {
                 localStorage.removeItem(vble);
                 document.getElementById("result").innerHTML = localStorage.length;
             }
-            else { document.getElementById("result").innerHTML = document.getElementById("result").innerHTML = localStorage.length; }//; }
+            else { document.getElementById("result").innerHTML = document.getElementById("result").innerHTML = localStorage.length; }
 
         }
         
@@ -185,21 +181,27 @@ function copy(ev, num, num2, num3, num4, num5) {
 </script>
 
 <body onload="start()">
-@*change above and below*@
 
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+        <li><a href="@("LoadMusicPaper?id=" + (ViewBag.pg + 1) + "&page=1")">New Composition</a></li>
+
+
+        </ul>
+    </div>
 <h2>@ViewBag.Title</h2>
 
-@*; border: 1px dotted #333333; height:40px; width:auto*@
+
 
 
 @for (int line = 0; line < 8; line++)
-{<!--Individual Line-->
+{
     <div id="div2">
         @for (int strinG = 0; strinG < 7; strinG++)
         {
 
             <div style="clear:left; background-image:url('/Content/Images/TbPpr.png')">
-                <!--Tab strings-->
+                
                 <p style="float:left">
                     <b>@(strinG + 1) :</b>
                 </p>
@@ -207,7 +209,7 @@ function copy(ev, num, num2, num3, num4, num5) {
                 <p style="float:left">|</p>
                 @for (int fret = 0; fret < 23; fret++)
                 {
-                    <!--Tab timeline-->
+                    
                     <p style="float:left">&#8213</p>
 
                     <div style="float:left;
@@ -229,7 +231,7 @@ height: 20px;
 
         }
         <div style="clear:left" ondragover="allowDrop(event)" ondrop="delete (event)">
-            <!--Note Values:-->
+            
 
             @for (int t = 0; t < 33; t++)
             {
@@ -248,7 +250,7 @@ height: 20px;
 <form method="post" style="float:right">
     <div class="form-group">
         @{
-            int id = ViewBag.idnum;
+            int id = ViewBag.idnum;@*For loop, then fill in the page.*@
             int holder = new int();
             List<SelectListItem> listItems = new List<SelectListItem>();
             holder = 1;
@@ -320,6 +322,6 @@ height: 20px;
 
     <button type="submit">Submit</button>
 </form>
-<button onclick="cleared()">Clear</button>
+
 <div id="result"></div>
     </body>

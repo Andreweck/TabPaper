@@ -25,30 +25,6 @@ namespace TabPaper.Controllers
             return View();
         }
 
-       
-            
-        public ActionResult MusicPaper()
-        {
-            ViewBag.Title = "New Composition";
-            ViewBag.range = "EBGDAEA";
-            ViewBag.apnd = TVM;
-            TabViewModel modell = model;
-           
-            return View(modell);
-        }
-
-        [HttpPost]
-
-        public ActionResult MusicPaper(int data)
-        {
-            string values;
-            ViewBag.Title = "New Composition";
-            ViewBag.range = "EBGDAEA";
-            
-            TabViewModel msc = new TabViewModel();
-            return View(msc);
-        }
-
         public ActionResult LoadMusicPaper(int id, int page)
         {
             
