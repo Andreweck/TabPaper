@@ -71,25 +71,27 @@
     }
     function drop(ev) {
 
-        ev.preventDefault();
+        //ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
         document.getElementById(data).parentNode.removeChild(document.getElementById(data));
-        var use = data;
-        var VlueCnt;
-        var vlue = [];
-        for (VlueCnt = 4; VlueCnt < use.length - 1; VlueCnt++) {
-            vlue += use[VlueCnt];
+        var count;
+        var storageArray;
+        var dataValue = "";
+        for (count = 4; count < data.length; count++) {
+            dataValue += data[count];
         }
-        var pass = vlue;
-
-        var vble;
-        for (vble = 0; vble < localStorage.length; vble++) {
-            if ((localStorage[vble] == pass) === true) {
-                localStorage.removeItem(vble);
+        for (count = 0; count < localStorage.length; count++) {
+            storageArray = localStorage[count].split(',');
+            if ((storageArray[4] === dataValue) == true) {
+                localStorage.removeItem(count);
+                
             }
         }
+        if ((localStorage.length === 1) == true) {
+            localStorage.clear();
+        }
+        
     }
-    
     
 </script>
 <body onload="menuStart()">
@@ -103,6 +105,6 @@
 
     <button onclick="cleared()">Delete All</button>
     <div id="link"></div>
-    
+    <div id="BinDiv" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
     
 </body>
